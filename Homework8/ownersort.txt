@@ -1,0 +1,32 @@
+Задание:
+* Создать скрипт ownersort.sh, который в заданной папке копирует файлы в директории, 
+названные по имени владельца каждого файла. 
+Учтите, что файл должен принадлежать соответствующему владельцу
+
+
+#!/bin/bash
+
+
+
+share=/home/dima/Homework7/
+
+
+cd $share
+
+
+for file in *
+	do
+		if [ -d $file ]
+		  then
+                     continue
+           	fi
+
+                if [ -e $file ]
+                  then
+                     owner=`ls -l $file | grep '^-' | awk {'print $3'}`
+		     mkdir $owner
+                     cp $file $share/$owner
+                     chown $owner $share/$owner/$file
+                fi
+        done
+
